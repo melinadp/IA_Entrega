@@ -5,8 +5,6 @@ using UnityEngine.AI;
 
 public class IAcontroller : MonoBehaviour
 {
-
-    //Target al que seguirá la IA
     Transform target;
     NavMeshAgent agent;
 
@@ -24,28 +22,28 @@ public class IAcontroller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //si la distancia entre al IA y el target es menor que 5, sigue al target
-        if(Vector3.Distance(transform.position, target.position) < 5)
+        if(Vector3.Distance(transform.position, target.position) < 5f)
         {
             agent.destination = target.position;
-        }else
+
+            if (Vector3.Distance(transform.position, target.position) < 2f)
+            {
+                Debug.Log("Ataque");
+            }
+        }
+        else
         {
-            //va a la posición de patrulla
              agent.destination = destinationPoints[destinationIndex].position;
 
-             //si la distancia entre la IA y el destino es menor a 0.5
             if(Vector3.Distance(transform.position, destinationPoints[destinationIndex].position) <1f)
             {
-            //mientras el Index sea inferior a la cantidad de puntos en el array pasa al siguiente punto
-            if(destinationIndex < destinationPoints.Length -1)
+                if(destinationIndex < destinationPoints.Length -1)
             {
-                //aumenta el index en 1
-                destinationIndex++;
-            }else
-            {
-                //si llega al maximo de puntos en el array los pone en 0
-                destinationIndex = 0;
-            }
+                    destinationIndex++;
+                }else
+                {
+                    destinationIndex = 0;
+                }
             }
         }
 
